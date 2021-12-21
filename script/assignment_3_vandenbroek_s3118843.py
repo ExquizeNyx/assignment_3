@@ -1,31 +1,34 @@
 #!/usr/bin/env python3
 
-#How to run:
+#How to run: %run script/assignment_3_vandenbroek_s3118843 white_readcounts.txt MGIBatchReport_20211217_155157.txt combined_file.txt
 
-#
+
+#### Define functions #######################################################################################
+
+# function for calcultating the sum of the read counts
 def calculateSum (readcounts, col):
     totalsum = 0
     for read in readcounts:
         totalsum = totalsum + int(read[col])
     return totalsum
 
-####Main##################################################
+#### Main ###################################################################################################
 
-#read file line-for line and stores content in empty list readcounts
+#read file line-for line and stores content in tab-delimited empty list
 readcounts = []
-with open ("white_readcounts.txt", "r") as fh:
+with open ("raw/white_readcounts.txt", "r") as fh:
     next(fh)
     for line in fh:
         readcounts.append(line.strip().split('\t'))
 
-#read file line-for-line and stores content in empty list report
+#read file line-for-line and stores content in tab-delimited empty list
 report_unfiltered = []
-with open ("MGIBatchReport_20211217_155157.txt", "r") as fh:
+with open ("raw/MGIBatchReport_20211217_155157.txt", "r") as fh:
     next(fh)
     for line in fh:
         report_unfiltered.append(line.strip().split('\t'))
 
-#
+#print the library size of every sample
 print("The amount of reads in the library of sample SRR1796061 is:  " + str(calculateSum(readcounts,1)))
 print("The amount of reads in the library of sample SRR1796064 is:  " + str(calculateSum(readcounts,2)))
 print("The amount of reads in the library of sample SRR1796094 is:  " + str(calculateSum(readcounts,3)))
@@ -34,14 +37,16 @@ print("The amount of reads in the library of sample SRR1796312 is:  " + str(calc
 print("The amount of reads in the library of sample SRR1796318 is:  " + str(calculateSum(readcounts,6)))
 
 
-#
+#create a dictionary, key for dictionary is gene_data[0] (ENSMUSG00000000001, etc)
+#there is no need to loop any more, because you can directly access the object with the key
+#filter out the gene id's that have no associated gene name
 report = {}
-for gene_name in report_unfiltered:
-    if gene_name[2] != "No associated gene":
-        report[gene_name[0]] = gene_name
+for gene_data in report_unfiltered:
+    key = gene_data[0]
+    if gene_data[2] != "No associated gene":
+        report[key] = gene_data
 
-
-#
+#print headerline with gene ID, gene name and sample name
 print(
     "Gene_ID\t"
     "Name\t"
@@ -56,15 +61,18 @@ print(
 #create empty list reformattedread that will hold the reformatted data
 reformatted_read = []
 
-for gene_data in readcounts:
-    new_data = gene_data
-    if gene_data[0] in report:
-        gene_info = report[gene_data[0]]
+#loops over the list of reads, checks if the key exist in the report
+#gets the object and adds the gene name to the new list
+for read_data in readcounts:
+    new_data = read_data
+    key = read_data[0]
+    if key in report:
+        gene_info = report[key]
         new_data.insert(1,gene_info[3])
         reformatted_read.append(new_data)
 
-#
-with open('combined_file.txt', 'w', newline='') as output:
+#write the headerline and the results to tab-delimited output file
+with open('output/combined_file.txt', 'w', newline='') as output:
     output.write(
         "Gene_ID\t"
         "Name\t"
@@ -77,9 +85,7 @@ with open('combined_file.txt', 'w', newline='') as output:
     for result in reformatted_read:
         output.write("\t".join(result) + "\n")
         
-#    writer = csv.DictWriter(outcsv, fieldnames = ["Gene ID", "Name", "SRR1796061", "SRR1796064", "SRR1796094", "SRR1796237", "SRR1796312", "SRR1796318"])
-#    writer.writeheader()
-#    writer.writerows(reformatted_read)
+
     
         
 
