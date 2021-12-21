@@ -9,12 +9,14 @@ import csv
 
 #read file line-for line and stores content in empty list readcounts
 readcounts = []
+headers = None
 with open ("white_readcounts.txt", "r") as fh:
     fh_reader = csv.reader(fh, delimiter ='\t')
-    next(fh_reader)
+    
+    headers = next(fh_reader)
     for line in fh_reader:
         readcounts.append(line)
-
+headers.insert(1,'Name')
 
 #read file line-for-line and stores content in empty list report
 report = []
@@ -39,8 +41,12 @@ for gene_data in readcounts:
             new_data.insert(1, gene_info[3])
             break
     reformatted_read.append(new_data)
-print(len(reformatted_read))
-print('test')
+
+with open('combined_file.csv', 'w', newline='') as outcsv:
+    writer = csv.writer(outcsv)
+    writer.writerow(headers)
+    for output in reformatted_read:
+        writer.writerow(output)
         
 
 
