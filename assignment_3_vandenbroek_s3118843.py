@@ -17,11 +17,12 @@ with open ("MGIBatchReport_20211217_155157.txt", "r") as fh:
     for line in fh:
         report_unfiltered.append(line.strip().split('\t'))
 
-report = []
+report = {}
 for gene_name in report_unfiltered:
     if gene_name[2] != "No associated gene":
-        report.append(gene_name)
-    
+        report[gene_name[0]] = gene_name
+
+
 #for rep in report:
 #    print(str(rep))
 print(
@@ -39,12 +40,11 @@ print(
 reformatted_read = []
 
 for gene_data in readcounts[1:]:
-    new_data = gene_data    
-    for gene_info in report:        
-        if gene_data[0] == gene_info[0]:
-            new_data.insert(1, gene_info[3])
-            break
-    reformatted_read.append(new_data)
+    new_data = gene_data
+    if gene_data[0] in report:
+        gene_info = report[gene_data[0]]
+        new_data.insert(1,gene_info[3])
+        reformatted_read.append(new_data)
 print(reformatted_read[0])
 with open('combined_file.txt', 'w', newline='') as output:
     output.write(
