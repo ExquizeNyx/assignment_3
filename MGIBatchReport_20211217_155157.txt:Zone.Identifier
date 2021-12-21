@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=http://www.informatics.jax.org/batch/summary
+HostUrl=http://www.informatics.jax.org/batch/report.txt?association=None&attributes=Nomenclature&fileType=tab&idColumn=1&idType=Ensembl&results=55489&startIndex=0
