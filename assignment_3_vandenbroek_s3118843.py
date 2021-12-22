@@ -3,7 +3,7 @@
 #How to run from assignment_3 folder: %run script/assignment_3_vandenbroek_s3118843
 
 
-#### Define functions ############################################################################
+#### Define functions #######################################################################################
 
 # function for calcultating the sum of the read counts
 def calculateSum (readcounts, column):
@@ -12,7 +12,7 @@ def calculateSum (readcounts, column):
         totalsum = totalsum + int(read[column])
     return totalsum
 
-#### Main ########################################################################################
+#### Main ###################################################################################################
 
 # read file line-for line and stores content in tab-delimited empty list
 readcounts = []
