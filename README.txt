@@ -10,3 +10,6 @@ It contains the following folders and its contents:
   
 - script: contains the script for the assignment
   assignment_3_vandenbroek_s3118843.py
+
+Link to github repository:
+https://github.com/ExquizeNyx/assignment_3
