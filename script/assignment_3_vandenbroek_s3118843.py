@@ -70,7 +70,7 @@ print(
 reformatted_read = []
 
 # loops over the list of reads, checks if the key(gene_id: ENSMUSG00000000001, etc) exist in the report
-# if it does, it gets the object and adds the gene name (to the matching gene id) to the list reformatted_read
+# if it does, it gets the object and inserts the gene name to the list reformatted_read
 for read_data in readcounts:
     new_data = read_data
     key = read_data[0]
