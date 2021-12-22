@@ -18,8 +18,6 @@ def calculateSum (readcounts, column):
 
 #### Main ########################################################################################
 
-#### calculating the library sizes ####
-
 # read file line-for line and stores content in tab-delimited empty list
 readcounts = []
 with open ("raw/white_readcounts.txt", "r") as fh:
@@ -34,6 +32,9 @@ with open ("raw/MGIBatchReport_20211217_155157.txt", "r") as fh:
     for line in fh:
         report_unfiltered.append(line.strip().split('\t'))
 
+
+#### calculating the library sizes ####
+        
 # print the library size of every sample
 print("The amount of reads in the library of sample SRR1796061 is:  " + str(calculateSum(readcounts,1)))
 print("The amount of reads in the library of sample SRR1796064 is:  " + str(calculateSum(readcounts,2)))
