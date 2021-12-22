@@ -72,7 +72,7 @@ for read_data in readcounts:
         reformatted_read.append(new_data)
 
 # write the headerline and the results to tab-delimited output file
-with open('output/combined_file.txt', 'w', newline='') as output:
+with open('output/new_readcounts.txt', 'w', newline='') as output:
     output.write(
         "Gene_ID\t"
         "Name\t"
